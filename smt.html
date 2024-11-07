@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SMT - FORMATER</title>
+
+    <script src="js/libs/xlsx.full.min.js"></script>
+    <script src="js/libs/jszip.min.js"></script>
+    <link rel="stylesheet" href="css/smt.css" />
+    <link rel="shortcut icon" href="./img/icon_16.png" type="image/x-icon" />
+  </head>
+
+  <body>
+    <!-- header -->
+    <div class="app">
+      <header>
+        <div class="titulo-sistema">SMT - FORMATER</div>
+        <div class="separador"></div>
+        <a id="logo"></a>
+      </header>
+
+      <!-- main -->
+      <main>
+        <div class="instructions">
+          <p>Arquivo modelo com instruções de preenchiemnto</p>
+          <a href="./assets/EXEMPLO SMT FORMATER.xlsx" class="download"
+            >Baixar modelo</a
+          >
+          <div id="display"></div>
+        </div>
+
+        <div class="drop">
+          <input type="file" name="plan" id="plan" accept=".xlsx" />
+          <div id="drop-area" class="drop-area">
+            <p>Selecione ou solte aqui o modelo preenchido.</p>
+          </div>
+        </div>
+      </main>
+
+      <!-- footer -->
+      <footer>
+        <span>© SMT - Formater 1.0.0</span>
+        <span class="copy"></span>
+        <span>by Cesar Dimi</span>
+      </footer>
+    </div>
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>
