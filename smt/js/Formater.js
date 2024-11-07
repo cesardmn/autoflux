@@ -58,12 +58,19 @@ export const Formater = async (file) => {
       transformedValue = rule.upper
         ? transformedValue.toUpperCase()
         : transformedValue
+      if (rule.validateTipoEndereco) {
+        transformedValue = ['I', 'N'].includes(transformedValue)
+          ? transformedValue
+          : 'N'
+      }
+
       transformedValue = transformedValue.slice(0, rule.limit)
+
       return transformedValue
     }
 
     const rules = {
-      'Tipo de Endereço': { limit: 1 },
+      'Tipo de Endereço': { limit: 1, upper: true, validateTipoEndereco: true },
       UF: { limit: 2, upper: true },
       DDD: { limit: 3, digit: true },
       CEP: { limit: 8, digit: true, padStart: [8, '0'] },
