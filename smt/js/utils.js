@@ -18,7 +18,7 @@ export const sanitizeString = (str) => {
    * Remove caracteres de controle Unicode invisíveis (Zero Width Space, BOM, etc.)
    * Substitui múltiplos espaços consecutivos por um único
    */
-  
+
   if (str == null) return ''
   str = String(str)
     .trim()
@@ -29,4 +29,10 @@ export const sanitizeString = (str) => {
     .replace(/\s+/g, ' ')
 
   return str.length === 0 || str === ' ' ? '' : str
+}
+
+export const normalizeString = (str) => {
+  return String(str)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
 }
