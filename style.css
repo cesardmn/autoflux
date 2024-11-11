@@ -27,4 +27,18 @@ body {
     'Open Sans',
     'Helvetica Neue',
     sans-serif;
+  background-color: #0d0d0d;
+}
+
+h1 {
+  height: 100%;
+  width: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 img {
+  width: 100%;
+  height: auto;
 }
