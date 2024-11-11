@@ -1,5 +1,6 @@
 import { Logger } from './Logger.js'
 import { XlsxProcessos } from './xlsx.js'
+import { normalizeString, sanitizeString } from './utils.js'
 
 export const Formater = async (file) => {
   const FormaterResult = {
@@ -32,18 +33,6 @@ export const Formater = async (file) => {
 
   const formatRow = (dataRow) => {
     const result = []
-
-    const sanitizeString = (data) => {
-      if (typeof data === 'undefined' || data === null) {
-        return ''
-      }
-      return String(data)
-        .replace(/[\r\n]+/g, ' ')
-        .trim()
-        .replace(/[\s\xA0\u2000-\u200B\t]+/g, ' ')
-        .replace(/\s+/g, ' ')
-        .replace(/[\x00-\x1F\x7F]/g, '')
-    }
 
     const applyTransformations = (value, rule) => {
       let transformedValue = sanitizeString(value)
@@ -88,15 +77,42 @@ export const Formater = async (file) => {
     }
 
     Object.entries(dataRow).forEach(([chave, valor]) => {
-      const rule = rules[chave]
       let formattedValue = ''
 
-      if (rule) {
-        formattedValue = applyTransformations(valor, rule)
-      } else {
-        const showValue = applyTransformations(valor, { limit: 100 })
-        formattedValue = `${sanitizeString(chave)}:${sanitizeString(showValue)}`
+      // Limpar e normalizar cabeçalhos não obrigatórios
+      let cleanedKey = sanitizeString(chave)
+
+      // Se a chave não está em requiredFields, normalizar
+      if (!requiredFields.includes(cleanedKey)) {
+        cleanedKey = normalizeString(cleanedKey)
       }
+
+      // Ignorar cabeçalhos vazios ou com apenas espaços
+      if (!cleanedKey) {
+        return // Se a chave estiver vazia, não processa essa coluna
+      }
+
+      // Verificar se o cabeçalho está nos requiredFields
+      const isRequiredField = requiredFields.includes(cleanedKey)
+
+      if (!isRequiredField) {
+        // Cabeçalhos não obrigatórios: aplicar sanitização e normalização
+        formattedValue = `${cleanedKey}:${sanitizeString(valor)}`
+      } else {
+        const rule = rules[cleanedKey]
+
+        // Aplicar transformações com base nas regras definidas
+        if (rule) {
+          formattedValue = applyTransformations(valor, rule)
+        } else {
+          const showValue = applyTransformations(valor, { limit: 100 })
+          formattedValue = `${cleanedKey}:${sanitizeString(showValue)}`
+        }
+      }
+
+      // Normalizar o valor final
+      formattedValue = normalizeString(formattedValue)
+
       result.push(formattedValue)
     })
 
@@ -104,11 +120,12 @@ export const Formater = async (file) => {
   }
 
   const xlsx = await XlsxProcessos.readerXLSX(file)
+  console.log(xlsx)
 
   if (xlsx.status === 'ok') {
     const data = xlsx.data
-    const requiredFields = hasRequiredFields(data[0])
-    if (requiredFields) {
+    const requiredFieldsCheck = hasRequiredFields(data[0])
+    if (requiredFieldsCheck) {
       const result = []
       xlsx.data.forEach((dataRow) => {
         const formattedRow = formatRow(dataRow)
