@@ -1,14 +1,8 @@
-import { Logger } from './Logger.js'
 import { XlsxProcessos } from './xlsx.js'
 import { normalizeString, sanitizeString } from './utils.js'
 
 export const Formater = async (file) => {
-  const FormaterResult = {
-    originFile: file,
-  }
-
-  // CONSTS
-  const requiredFields = [
+  const REQUIRED_FIELDS = [
     'Titulo/Outros',
     'Nome Completo',
     'E-mail',
@@ -26,117 +20,114 @@ export const Formater = async (file) => {
     'Número',
   ]
 
-  // VALIDATORS
-  const hasRequiredFields = (dataRow) => {
-    return requiredFields.every((field) => field in dataRow)
+  const formatKey = (key) => {
+    const isRequiredField = REQUIRED_FIELDS.includes(key)
+    if (isRequiredField) {
+      return ''
+    } else {
+      const sanitizedString = sanitizeString(key)
+      const normalizedString = normalizeString(sanitizedString)
+      return normalizedString !== '' ? `${normalizedString}:` : ''
+    }
   }
 
-  const formatRow = (dataRow) => {
-    const result = []
+  const formatValue = (key, value) => {
+    let sanitizedString = sanitizeString(value)
+    let normalizedString = normalizeString(sanitizedString)
+    normalizedString = normalizedString !== '' ? normalizedString : ''
 
-    const applyTransformations = (value, rule) => {
-      let transformedValue = sanitizeString(value)
-      transformedValue = rule.digit
-        ? transformedValue.replace(/\D/g, '')
-        : transformedValue
-      transformedValue = rule.padStart
-        ? transformedValue.padStart(rule.padStart[0], rule.padStart[1])
-        : transformedValue
-      transformedValue =
-        rule.emptyNum && !transformedValue ? 'S/N' : transformedValue
-      transformedValue = rule.upper
-        ? transformedValue.toUpperCase()
-        : transformedValue
-      if (rule.validateTipoEndereco) {
-        transformedValue = ['I', 'N'].includes(transformedValue)
-          ? transformedValue
-          : 'N'
-      }
-
-      transformedValue = transformedValue.slice(0, rule.limit)
-
-      return transformedValue
+    if (key === 'Tipo de Endereço') {
+      normalizedString = normalizedString.slice(0, 1).toUpperCase()
+      return ['I', 'N'].includes(normalizedString) ? normalizedString : 'N'
     }
 
-    const rules = {
-      'Tipo de Endereço': { limit: 1, upper: true, validateTipoEndereco: true },
-      UF: { limit: 2, upper: true },
-      DDD: { limit: 3, digit: true },
-      CEP: { limit: 8, digit: true, padStart: [8, '0'] },
-      cpf_cnpj: { limit: 14, digit: true },
-      Telefone: { limit: 15, digit: true },
-      Número: { limit: 15, emptyNum: true },
-      'Titulo/Outros': { limit: 40 },
-      Complemento: { limit: 40 },
-      'E-mail': { limit: 50 },
-      'Nome Completo': { limit: 60 },
-      'Tipo Logradouro': { limit: 72 },
-      Logradouro: { limit: 72 },
-      Bairro: { limit: 72 },
-      Cidade: { limit: 72 },
+    if (key === 'UF') {
+      return normalizedString.toUpperCase().slice(0, 2)
     }
 
-    Object.entries(dataRow).forEach(([chave, valor]) => {
-      let formattedValue = ''
+    if (key === 'DDD') {
+      return normalizedString.replace(/\D/g, '').slice(0, 3)
+    }
 
-      // Limpar e normalizar cabeçalhos não obrigatórios
-      let cleanedKey = sanitizeString(chave)
+    if (key === 'CEP') {
+      return normalizedString.replace(/\D/g, '').slice(0, 8).padStart(8, '0')
+    }
 
-      // Se a chave não está em requiredFields, normalizar
-      if (!requiredFields.includes(cleanedKey)) {
-        cleanedKey = normalizeString(cleanedKey)
-      }
+    if (key === 'cpf_cnpj') {
+      return normalizedString.replace(/\D/g, '').slice(0, 14)
+    }
 
-      // Ignorar cabeçalhos vazios ou com apenas espaços
-      if (!cleanedKey) {
-        return // Se a chave estiver vazia, não processa essa coluna
-      }
+    if (key === 'Telefone') {
+      return normalizedString.replace(/\D/g, '').slice(0, 15)
+    }
 
-      // Verificar se o cabeçalho está nos requiredFields
-      const isRequiredField = requiredFields.includes(cleanedKey)
+    if (key === 'Número') {
+      normalizedString = normalizedString.replace(/\D/g, '').slice(0, 15)
+      return normalizedString !== '' ? normalizedString : 'S/N'
+    }
 
-      if (!isRequiredField) {
-        // Cabeçalhos não obrigatórios: aplicar sanitização e normalização
-        formattedValue = `${cleanedKey}:${sanitizeString(valor)}`
+    if (key === 'Titulo/Outros' || key === 'Complemento') {
+      return normalizedString.slice(0, 40)
+    }
+
+    if (key === 'E-mail') {
+      return normalizedString.slice(0, 50)
+    }
+
+    if (key === 'Nome Completo') {
+      return normalizedString.slice(0, 60)
+    }
+
+    if (
+      key === 'Tipo Logradouro' ||
+      key === 'Logradouro' ||
+      key === 'Bairro' ||
+      key === 'Cidade'
+    ) {
+      return normalizedString.slice(0, 72)
+    }
+
+    return normalizedString.slice(0, 100)
+  }
+
+  const formatRow = (item) => {
+    const formattedRow = []
+
+    Object.entries(item).forEach(([key, value]) => {
+      const formatedKey = formatKey(key)
+      const formatedValue = formatValue(key, value)
+
+      const dataVal = `${formatedKey}${formatedValue}`
+
+      if (REQUIRED_FIELDS.includes(key)) {
+        formattedRow.push(dataVal)
       } else {
-        const rule = rules[cleanedKey]
-
-        // Aplicar transformações com base nas regras definidas
-        if (rule) {
-          formattedValue = applyTransformations(valor, rule)
-        } else {
-          const showValue = applyTransformations(valor, { limit: 100 })
-          formattedValue = `${cleanedKey}:${sanitizeString(showValue)}`
-        }
+        dataVal !== '' && formattedRow.push(dataVal)
       }
-
-      // Normalizar o valor final
-      formattedValue = normalizeString(formattedValue)
-
-      result.push(formattedValue)
     })
 
-    return result.join(';')
+    return formattedRow.join(';')
   }
 
+  const FormaterResult = { originFile: file, csvdata: [] }
   const xlsx = await XlsxProcessos.readerXLSX(file)
-  console.log(xlsx)
 
   if (xlsx.status === 'ok') {
-    const data = xlsx.data
-    const requiredFieldsCheck = hasRequiredFields(data[0])
-    if (requiredFieldsCheck) {
-      const result = []
-      xlsx.data.forEach((dataRow) => {
-        const formattedRow = formatRow(dataRow)
-        result.push(formattedRow)
+    const dataJson = xlsx.data
+
+    const hasRequiredFields = REQUIRED_FIELDS.every(
+      (field) => field in dataJson[0]
+    )
+
+    if (hasRequiredFields) {
+      dataJson.forEach((item) => {
+        const formattedRow = formatRow(item)
+        FormaterResult.csvdata.push(formattedRow)
       })
-      FormaterResult.csvdata = result
     }
-  } else {
-    Logger.setLog('XlsxProcessos | readerXLSX', xlsx.erro)
-    return
   }
+
+  console.log(FormaterResult.csvdata)
 
   return FormaterResult
 }
