@@ -50,8 +50,6 @@ const app = () => {
       return
     }
 
-    display.textContent = 'Processando...'
-
     try {
       const result = await Formater(file)
       const generatedData = await generateCSV(result)
