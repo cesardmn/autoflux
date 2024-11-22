@@ -1,4 +1,4 @@
-export const XlsxProcessos = (() => {
+export const Xlsx = (() => {
   const readerXLSX = async (file) => {
     try {
       const arrayBuffer = await file.arrayBuffer()

@@ -1,5 +1,5 @@
-import { XlsxProcessos } from './xlsx.js'
-import { normalizeString, sanitizeString } from './utils.js'
+import { Xlsx } from '../../src/js/Xlsx.js'
+import { normalizeString, sanitizeString } from '../../src/js/Utils.js'
 
 export const Formater = async (file) => {
   const REQUIRED_FIELDS = [
@@ -110,7 +110,7 @@ export const Formater = async (file) => {
   }
 
   const FormaterResult = { originFile: file, csvdata: [] }
-  const xlsx = await XlsxProcessos.readerXLSX(file)
+  const xlsx = await Xlsx.readerXLSX(file)
 
   if (xlsx.status === 'ok') {
     const dataJson = xlsx.data
@@ -126,8 +126,5 @@ export const Formater = async (file) => {
       })
     }
   }
-
-  console.log(FormaterResult.csvdata)
-
   return FormaterResult
 }
