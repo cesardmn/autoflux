@@ -1,19 +1,193 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AUTOFLUX</title>
-    <link rel="stylesheet" href="./src/css/style.css" />
-    <link
-      rel="shortcut icon"
-      href="./src/img/logos/icon.svg  "
-      type="image/x-icon"
-    />
-  </head>
-  <body>
-    <h1>
-      <img src="./src/img/logos/htd.svg" alt="" />
-    </h1>
-  </body>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AUTOFLUX</title>
+  <link rel="stylesheet" href="./src/css/style.css" />
+  <link rel="shortcut icon" href="./src/img/logos/icon.svg" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <img src="./src/img/logos/htd.svg" alt="Logo AUTOFLUX" />
+      </div>
+
+      <button class="menu-toggle" aria-label="Abrir menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="#hero"> Início</a></li>
+          <li><a href="#ferramentas">Ferramentas</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1 class="hero-title">AUTFLUX: <span>Produtividade Automatizada</span></h1>
+        <p class="hero-subtitle">
+          Ferramentas inteligentes para simplificar tarefas.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="hero-cta">Experimente</a>
+        </div>
+      </div>
+      <div class="hero-illustration">
+        <img src="./src/img/logos/icon.svg" alt="Automação de processos" />
+      </div>
+    </div>
+  </section>
+
+  <main id="projects">
+    <section class="projects-section" id="ferramentas">
+      <h2 class="section-title">Nossas <span>Soluções</span></h2>
+      <div class="projects-grid">
+        <!-- Card 1 -->
+        <div class="project-card">
+          <div class="project-image-container">
+            <img src="./src/img/vfipe.webp" alt="V Fipe" class="project-image" />
+          </div>
+          <div class="project-content">
+            <h3 class="project-name">V Fipe</h3>
+            <p class="project-description">
+              Consulta rápida e precisa de valores de veículos usando dados oficiais da Tabela FIPE.
+            </p>
+            <div class="project-links">
+              <a href="https://vfipe.com.br" target="_blank" class="project-btn">
+                <i class="fas fa-external-link-alt"></i> Acessar
+              </a>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="project-card">
+          <div class="project-image-container">
+            <img src="./src/img/md.webp" alt="Mala Direta" class="project-image" />
+          </div>
+          <div class="project-content">
+            <h3 class="project-name">Mala Direta</h3>
+            <p class="project-description">
+              Gere documentos personalizados em massa a partir de modelos Word e dados de planilhas Excel.
+            </p>
+
+            <div class="project-links">
+              <a href="/maladireta" class="project-btn">
+                <i class="fas fa-external-link-alt"></i> Acessar
+              </a>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="project-card">
+          <div class="project-image-container">
+            <img src="./src/img/smt.webp" alt="SMT Formater" class="project-image" />
+          </div>
+          <div class="project-content">
+            <h3 class="project-name">SMT Formater</h3>
+            <p class="project-description">
+              Prepare arquivos para envio de telegramas no sistema dos Correios de forma rápida e eficiente.
+            </p>
+
+            <div class="project-links">
+              <a href="/smt" class="project-btn">
+                <i class="fas fa-external-link-alt"></i> Acessar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features-section">
+      <div class="features-container">
+        <div class="features-content">
+          <h2 class="section-title">Por que escolher <span>AUTFLUX</span>?</h2>
+          <p class="features-description">
+            Nossas soluções são desenvolvidas para otimizar seu fluxo de trabalho, eliminando tarefas repetitivas e
+            reduzindo erros manuais.
+          </p>
+          <div class="features-grid">
+            <div class="feature-item">
+              <div class="feature-icon">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <h3>Eficiência</h3>
+              <p>Automatize processos demorados e ganhe tempo para o que realmente importa.</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <h3>Confiabilidade</h3>
+              <p>Resultados precisos e consistentes em todas as execuções.</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">
+                <i class="fas fa-cogs"></i>
+              </div>
+              <h3>Integração</h3>
+              <p>Compatível com os formatos e sistemas que você já utiliza.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- <footer id="contact">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img src="./src/img/logos/htd.svg" alt="Logo AUTOFLUX" class="footer-logo" />
+        <p>Automatizando sua produtividade com soluções inteligentes.</p>
+
+      </div>
+      
+    <div class="footer-bottom">
+      <p>&copy; 2025 AUTFLUX. Todos os direitos reservados.</p>
+      <p>Desenvolvido por <a href="https://cesardmn.github.io" target="_blank">Cesar Dimi</a></p>
+    </div>
+      <div class="footer-contact">
+    </div>
+    
+
+  </footer> -->
+
+  <footer class="footer-container">
+    <div class="footer-brand">
+      <img src="./src/img/logos/htd.svg" alt="Logo AUTOFLUX" class="footer-logo" />
+      <p>Automatizando sua produtividade com soluções inteligentes.</p>
+    </div>
+
+    <div class="footer-copy">
+      <p>&copy; 2025 AUTFLUX. Todos os direitos reservados.</p>
+      <p>Desenvolvido por <a href="https://cesardmn.github.io" target="_blank">Cesar Dimi</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const toggleBtn = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+
+    toggleBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      toggleBtn.classList.toggle('active');
+    });
+  </script>
+</body>
+
 </html>
