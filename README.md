@@ -20,7 +20,7 @@ Simplificar processos operacionais através de automações inteligentes, permit
 - **Benefícios**: 
   - Acesso rápido e preciso à tabela FIPE oficial
   - Interface limpa e focada na produtividade
-  - Filtro de pesquisa otimizado.
+  - Filtro de pesquisa otimizado
 
 ### 2. Mala Direta Automatizada
 - **Função**: Geração em massa de documentos personalizados
@@ -36,12 +36,24 @@ Simplificar processos operacionais através de automações inteligentes, permit
   - Eliminação de erros de formatação
   - Validação de CEPs
 
+### 4. Compara DOC
+- **Função**: Comparação inteligente de documentos DOCX
+- **Benefícios**:
+  - Identificação visual de diferenças entre versões de documentos
+  - Diferenciação em nível de parágrafos e palavras
+  - Métricas de similaridade e relatório de alterações
+  - Múltiplos modos de visualização (lado a lado, unificado, empilhado)
+
 ## Tecnologias Utilizadas
 
-- **Frontend**: HTML5 semântico, CSS3 moderno com variáveis, JavaScript ES6+
-- **Performance**: Otimização de carregamento, lazy loading, pré-carregamento estratégico
-- **Acessibilidade**: Padrões WCAG, ARIA, navegação por teclado
-- **SEO**: Metadados estruturados, Open Graph, semântica aprimorada
+- **Frontend**: React.js, Tailwind CSS, JavaScript ES6+
+- **Bibliotecas Especializadas**:
+  - Mammoth.js (processamento de DOCX)
+  - JsDiff (algoritmo de comparação)
+  - Zustand (gerenciamento de estado)
+- **Performance**: Otimização de carregamento, lazy loading
+- **Acessibilidade**: Padrões WCAG, ARIA
+- **SEO**: Metadados estruturados, Open Graph
 
 ## Princípios de Desenvolvimento
 
@@ -49,7 +61,7 @@ Simplificar processos operacionais através de automações inteligentes, permit
 2. **Confiabilidade**: Processos consistentes e resultados previsíveis
 3. **Usabilidade**: Interfaces limpas com curva de aprendizado mínima
 4. **Manutenibilidade**: Código organizado e documentado para fácil evolução
-
+5. **Precisão**: Resultados confiáveis em comparações e automações
 
 ## Licença
 
@@ -57,4 +69,5 @@ Distribuído sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais
 
 ---
 
-Desenvolvido por [Cesar Dimi](https://github.com/cesardimi)
+Desenvolvido por [Cesar Dimi](https://github.com/cesardimi)  
+*Soluções de produtividade para profissionais exigentes*
